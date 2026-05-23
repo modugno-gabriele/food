@@ -12,7 +12,7 @@ from routes.categorie import categorie_bp
 
 app = Flask(__name__)
 app.config.from_object(Config)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Registrazione Blueprint
 app.register_blueprint(ristoranti_bp, url_prefix='/api/ristoranti')
