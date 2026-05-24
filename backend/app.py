@@ -12,9 +12,15 @@ from routes.categorie import categorie_bp
 
 app = Flask(__name__)
 app.config.from_object(Config)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app)
 
-# Registrazione Blueprint
+@app.after_request
+def aggiungi_cors(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = '*'
+    return response
+
 app.register_blueprint(ristoranti_bp, url_prefix='/api/ristoranti')
 app.register_blueprint(piatti_bp, url_prefix='/api/piatti')
 app.register_blueprint(clienti_bp, url_prefix='/api/clienti')
@@ -26,15 +32,7 @@ app.register_blueprint(categorie_bp, url_prefix='/api/categorie')
 
 @app.route('/')
 def index():
-    return {'message': 'Food Delivery API funzionante ✅', 'version': '1.0'}, 200
-
-@app.errorhandler(404)
-def not_found(e):
-    return {'error': 'Risorsa non trovata'}, 404
-
-@app.errorhandler(500)
-def server_error(e):
-    return {'error': 'Errore interno del server'}, 500
+    return {'message': 'Food Delivery API funzionante', 'version': '1.0'}, 200
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
