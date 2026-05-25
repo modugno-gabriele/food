@@ -1,15 +1,46 @@
 import { Routes } from '@angular/router';
-import { CategorieComponent } from './components/categorie/categorie.component';
-import { RistorantiComponent } from './components/ristoranti/ristoranti.component';
-import { DettaglioRistoranteComponent } from './components/ristoranti/dettaglio-ristorante.component';
-import { DettaglioPiattoComponent } from './components/piatti/dettaglio-piatto.component';
 
 export const routes: Routes = [
-  { path: '',                              redirectTo: 'categorie', pathMatch: 'full' },
-  { path: 'categorie',                     component: CategorieComponent },
-  { path: 'ristoranti',                    component: RistorantiComponent },
-  { path: 'ristoranti/categoria/:id',      component: RistorantiComponent },
-  { path: 'ristoranti/:id',               component: DettaglioRistoranteComponent },
-  { path: 'piatti/:id',                    component: DettaglioPiattoComponent },
-  { path: '**',                            redirectTo: 'categorie' }
+  { path: '', redirectTo: 'ristoranti', pathMatch: 'full' },
+  {
+    path: 'ristoranti',
+    loadComponent: () =>
+      import('./pages/ristoranti/ristoranti.component').then(m => m.RistorantiComponent)
+  },
+  {
+    path: 'categorie',
+    loadComponent: () =>
+      import('./pages/categorie/categorie.component').then(m => m.CategorieComponent)
+  },
+  {
+    path: 'piatti',
+    loadComponent: () =>
+      import('./pages/piatti/piatti.component').then(m => m.PiattiComponent)
+  },
+  {
+    path: 'ingredienti',
+    loadComponent: () =>
+      import('./pages/ingredienti/ingredienti.component').then(m => m.IngredientiComponent)
+  },
+  {
+    path: 'clienti',
+    loadComponent: () =>
+      import('./pages/clienti/clienti.component').then(m => m.ClientiComponent)
+  },
+  {
+    path: 'ordini',
+    loadComponent: () =>
+      import('./pages/ordini/ordini.component').then(m => m.OrdiniComponent)
+  },
+  {
+    path: 'fattorini',
+    loadComponent: () =>
+      import('./pages/fattorini/fattorini.component').then(m => m.FattoriniComponent)
+  },
+  {
+    path: 'recensioni',
+    loadComponent: () =>
+      import('./pages/recensioni/recensioni.component').then(m => m.RecensioniComponent)
+  },
+  { path: '**', redirectTo: 'ristoranti' }
 ];
